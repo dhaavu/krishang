@@ -1,0 +1,268 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+
+	<title>jQuery Mobile: Theme Download</title>
+	    <script type="text/javascript" charset="utf-8" src="js/jquery-1.11.3.min.js"></script>
+	    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+<!-- 		<script src="http://localhost:8080/target/target-script-min.js#anonymous"></script>
+ -->	    <script type="text/javascript" charset="utf-8" src="js/main.js"></script>
+
+				<script> 
+			
+				
+		function GetPhoto()
+		{
+			try {
+			
+				//	alert('Take Photo'); 
+					
+					 navigator.camera.getPicture(onSuccess, onFail, {
+								quality: 100,
+								targetWidth: 400,
+								targetHeight: 400,
+								destinationType: Camera.DestinationType.FILE_URI ,
+								correctOrientation: true
+							 });
+				} 
+			catch (err) {
+				alert('error:' + err.message); 
+					
+			}
+		}
+		
+		function onSuccess(imageURI) {
+	try{
+   $('#image').append(' <img  class="itemImage" onclick="javascript:changeImage(this.src)" style="float:left; margin:1px; cursor:pointer" src="' + imageURI + '" >'); 
+   $('#SelectedImage').html('<img id="LargeImage" style="margin:2px; cursor:pointer; width:100%;  height:400px;" src="' + imageURI + '" >');
+//alert(imageData);   
+
+
+  } 
+   
+   catch(err){
+   alert('error:' + err.message); 
+   
+   }
+   
+   }
+
+function onFail(){
+alert("Photo Capture Canceled"); 
+}
+
+function changeImage(src)
+{
+
+    $('#LargeImage').attr('src', src);
+}
+
+
+
+	</script> 
+	<style> 
+	.itemImage {
+			overflow:hidden;
+			width:80px; 
+			height:80px; 
+			margin:5px auto; 
+		}
+	</style> 
+	
+	<style>
+#navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #D83017;
+}
+
+#navbar li {
+    float: left;
+    border-right:1px solid #bbb;
+width:33%; 
+}
+
+#navbar li:last-child {
+    border-right: none;
+}
+
+#navbar li a {	
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+#navbar li a:hover:not(.active) {
+    background-color: #1a8dbe;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+
+
+#header {
+   position:fixed;
+   left:0px;
+   top:0px;
+   width:100%;
+   height: 50px;
+text-align: center;
+background: #D83017;
+border-bottom: solid #918B8B 3px;
+-webkit-box-shadow: 0px 0px 14px #8A888E;
+-moz-box-shadow: 0px 0px 14px #8A888E;
+box-shadow: 0px 0px 14px #8A888E;
+z-index: 1;
+}
+
+#header h1{
+margin:0 auto; 
+color:white; 
+font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif; 
+font-size:14px; 
+ position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+body{
+background:rgba(218,218,218, 0.68); 
+margin:0px; 
+padding:0px; 
+}
+
+#content{
+margin-top:75px;
+margin-bottom:50px;
+width:100%;
+text-align:center;   
+}
+
+#content input {
+width:90%; 
+height:30px; 
+margin:0 auto; 
+    border-radius: 10px;
+	background-image:url('themes/images/icons-png/search-black.png');
+background-repeat:no-repeat;
+background-position:right center;outline:1;
+}
+
+   
+   #searchResults{display:none; }
+   
+#searchResults ul {
+  list-style-type: none;
+  width: 100%;
+   
+   
+    padding: 0px;
+	margin:0px;
+}
+
+#searchResults h3 {
+<!--   font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+ --> 
+ font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif; 
+font-size:18px; 
+
+  color: #524C4C;
+    text-decoration: none;
+	margin:5px 0px 0px 0px; 
+	padding:0px; 
+	width:200px; 
+}
+
+#searchResults li img {
+  float: left;
+  margin: 5px;
+  height:75px;
+  width:75px; 
+  padding:0px; 
+  border-radius: 50%;
+}
+
+#searchResults li p {
+  font: 200 12px/1.5 Georgia, Times New Roman, serif;
+  color: #524C4C;
+    text-decoration: none;
+	margin:0px; 
+	margin-left: 2px;
+	padding:0px; 
+	width:200px; 
+}
+
+#searchResults li {
+  padding: 10px;
+  overflow: auto;
+  text-align:left; 
+  background:#FFF;  
+  margin-bottom:7px; 
+padding:0px;   
+}
+
+#searchResults li:hover {
+  background: #D0D2D3;
+  cursor: pointer;
+}  
+
+.radio_div{
+display:none; 
+}
+
+.arrow_div{
+display:block; 
+}
+
+</style>
+
+
+</head>
+<body onload="onBodyLoad()">
+	<div id="header" style="height:50px; text-align:center; background:#D83017; z-index:1 ">
+			<h1>Krishang</h1>
+	</div>
+		<div id="content">
+		
+		<form method="post" action="JavaScript:ListDBValues($('#search-mini').val())">
+			<input type="search"  id="search-mini" value=""  onsearch="JavaScript:ListDBValues($('#search-mini').val())"/>
+		</form>
+		<div id="toolbar" style="display:block; width:90%; height:30px"> 
+				
+				<img id="cancelIcon" style="width:20px; height:20px; float:right; display:none; margin-right:15px; " src="img/iconCancel.png" onclick="cancelSelect()"/> 
+				<img id="deleteIcon" style="width:20px; height:20px; float:right; display:none; margin-right:15px; " src="img/iconDelete.png" onclick="deleteSelected()"/> 
+				<input id="checkAll" style="width:20px; height:20px; float:right; display:none; margin-right:15px; " type="checkbox" "/> 
+			    <img id="selectIcon" style="width:20px; height:20px; float:right; display:inline;" src="img/select.png" onclick="multiSelect()"/> 
+				
+				
+		</div>
+			<div id="searchResults" style=" margin-top:5px; "> 
+			 
+			<ul id="SearchList">
+				
+			</ul>
+			</div> 
+		</div>
+		<div id="footer">
+	<div id="navbar">
+		<a href="add.html"><img style="position: fixed; bottom: 6%;left: 80%; height: 68px;"src="img/iconPlus.png"> </a>
+		<!-- <ul>
+			<li><a class="active" href="index.html">Search</a></li>
+			<li><a href="add.html">Add</a></li>
+			<li><a href="c.html">Delete</a></li>
+			
+		</ul> -->
+	</div><!-- /navbar -->
+</div><!-- /footer -->
+	
+
+		
+	
+</body>
+</html>

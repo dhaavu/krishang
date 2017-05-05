@@ -1,0 +1,392 @@
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+  
+	<title>jQuery Mobile: Theme Download</title>
+	    <script type="text/javascript" charset="utf-8" src="js/jquery-1.11.3.min.js"></script>
+	    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/main.js"></script>
+	<!-- 	<script src="http://localhost:8080/target/target-script-min.js#anonymous"></script>
+ -->	<style> 
+	.itemImage {
+			overflow:hidden;
+			width:80px; 
+			height:80px; 
+			margin:5px auto; 
+		}
+	</style> 
+	
+	<style>
+#navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #1a8dbe;
+}
+
+#navbar li {
+    float: left;
+    border-right:1px solid #bbb;
+width:33%; 
+}
+
+#navbar li:last-child {
+    border-right: none;
+}
+
+#navbar li a {	
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+#navbar li a:hover:not(.active) {
+    background-color: #1a8dbe;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+
+#footer {
+   position:fixed;
+   left:0px;
+   bottom:0px;
+   height:40px;
+   width:100%;
+   background:#999;
+}
+
+#header {
+   position:fixed;
+   left:0px;
+   top:0px;
+   width:100%;
+   height: 50px;
+text-align: center;
+background: #D83017;
+border-bottom: solid #918B8B 3px;
+-webkit-box-shadow: 0px 0px 14px #8A888E;
+-moz-box-shadow: 0px 0px 14px #8A888E;
+box-shadow: 0px 0px 14px #8A888E;
+z-index: 1;
+}
+
+#header h1{
+margin:0 auto; 
+color:white; 
+font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif; 
+font-size:14px; 
+ position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+body{
+background:rgba(218,218,218, 0.68); 
+margin:0px; 
+padding:0px; 
+}
+
+#content{
+margin-top:60px;
+margin-bottom:50px; 
+width:100%;
+text-align:center;   
+}
+
+#InputForm{
+text-align:center; 
+margin:15px auto; 
+}
+
+
+
+#InputForm textarea {
+height:50px; 
+}
+
+
+/* IE 6 */
+* html #footer {
+   position:absolute;
+   top:expression((0-(footer.offsetHeight)+(document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight)+(ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop))+'px');
+
+   }
+   
+   
+#searchResults ul {
+  list-style-type: none;
+  width: 100%;
+      border-radius: 10px;
+    border: solid #1A8DBE 2px;
+    padding: 0px;
+}
+
+#searchResults h3 {
+  font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+  color: white;
+    text-decoration: none;
+}
+
+#searchResults li img {
+  float: left;
+  margin: 0 15px 0 0;
+  height:100px;
+}
+
+#searchResults li p {
+  font: 200 12px/1.5 Georgia, Times New Roman, serif;
+  color: white;
+    text-decoration: none;
+}
+
+#searchResults li {
+  padding: 10px;
+  overflow: auto;
+  text-align:left; 
+  background:#1A8DBE;  
+}
+
+#searchResults li:hover {
+  background: #0B6186;
+  cursor: pointer;
+}  
+
+.close-image{
+	display:none; 
+    float:right;
+    position:relative;
+    top:-7px;
+    right: 7px;
+    height: 20px;
+	
+}
+
+#back {
+float: left;
+position:relative; 
+background: rgb(14, 44, 90);
+border: none;
+margin-top: 10px;
+margin-left: 10px;
+height: 25px;
+width: auto;
+color: white;
+z-index:5;
+}
+
+.form-group {
+    position: relative;
+    text-align:center; 
+}
+
+.span2 {
+    padding-left: 75px;
+    width:100%;
+    margin-top:2px;
+     border:solid rgb(246, 245, 245) 1px;
+    border-radius: 3px;height:23px;
+
+}
+
+
+
+.label-text {
+    position: absolute;
+left: 5px;
+top: 9px;
+border: solid #F3F5F6 1px;
+color: #939797;
+border-radius: 3px;
+padding-right: 5px;
+padding-left: 5px;
+background: #D7D9DA;
+
+}
+
+</style>
+
+
+<script>
+function onBodyLoad(){
+try
+{
+
+ var x = document.URL;
+ 
+ x= x.split('=')[1]; 
+
+
+var db;
+var shortName = 'WebSqlDB';
+var version = '1.0';
+var displayName = 'WebSqlDB';
+var maxSize = 65535;
+
+
+db = openDatabase(shortName, version, displayName,maxSize);
+
+
+ db.transaction(function(tx) {
+   tx.executeSql('SELECT row_id, name , tag, primary_image FROM item where row_id = ?;', [x],
+   function(tx, result) {
+      if (result != null && result.rows != null) {
+	  var row = result.rows.item(0);
+	 	  $('#name').val(row.name); 
+	  $('#tag').val(row.tag); 
+	  var imagePath = '1';
+	  imagePath = row.primary_image;	
+	  $('#deleteIcon').attr('onclick', 'deleteRecord('+ x +', "N")'); 
+	  if( imagePath !== void 0 ) 
+	  {
+		 $('#SelectedImage').html('<img id="LargeImage" style="display:block; margin:0 auto; cursor:pointer; max-width:100%;  max-height:400px;" src="' + row.primary_image + '" >'); 
+
+		   tx.executeSql('SELECT file_path, item_id, row_id FROM images where item_id = ?;', [x],
+		   function(tx, result) {
+		  if (result != null && result.rows != null) {
+		  $('#image').empty();
+			 for (var i = 0; i < result.rows.length; i++) {
+			  row = result.rows.item(i);
+			  $('#image').append('<div id="imgdiv_'+ row.row_id +'" style="float: left; margin: 6px 0px 0px 6px;">  <img id="close_'+ row.row_id +'" class="close-image" onclick="javascript:deleteImage(this.id)" src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-close-circled-128.png" /> <img  id="'+ row.row_id +'" class="itemImage" onclick="javascript:changeImage(this.src)" style=" display:block; cursor:pointer" src="' + row.file_path + '" ></div>');
+			}
+		
+		  
+		  }
+		  if($('#image img').prop('src') != null)
+		  {
+			$('#image').css('display','table-row'); 
+			$('#SelectedImage').css('display','block'); 
+			
+		  }
+
+		  }, nullHandler, errorHandler);
+	  }
+	  
+}	  
+
+},  nullHandler, errorHandler);
+}, nullHandler, errorHandler);
+ 
+ 
+}
+catch(err)
+{
+	alert('Error: ' + err); 
+}
+} 
+
+
+function editRecord(){
+
+document.getElementById("name").readOnly = false; 
+document.getElementById("tag").readOnly = false; 
+$('.close-image').css('display','block');
+$('#AddAndDone').css('display','block');
+$('#addImages').css('display','inline');
+$('#deleteIcon').css('display','none');
+$('#editIcon').css('display','none');
+$('#cancelIcon').css('display','inline');
+
+
+
+}
+
+function cancelEdit(){
+
+document.getElementById("name").readOnly = true; 
+document.getElementById("tag").readOnly = true; 
+$('.close-image').css('display','none');
+$('#AddAndDone').css('display','none');
+$('#addImages').css('display','none');
+$('#deleteIcon').css('display','inline');
+$('#editIcon').css('display','inline');
+
+$('#cancelIcon').css('display','none');
+
+}
+
+
+function goBack() {
+    window.history.back();
+}
+
+</script>
+</head>
+<body onload="onBodyLoad()">
+<div id="header" style="height:50px; text-align:center; background:#D83017; z-index:1 " onclick="goBack()">
+<div style="width:20%; float:left; height:50px;" onclick="goBack()"> 
+   
+		<img src="themes\images\icons-png\carat-l-white.png" style="height:18px; margin-top: 14px;" onClick="goBack()"/>
+
+</div>
+<div style="width:80%; height:50px; ">  
+			<h1>Krishang</h1>
+</div> 	
+	</div>
+		<div id="content">
+			<!-- <div style="text-align:center; border-radius:5px; color:black;  border:2px solid #73AD21;"> 
+			<h3>Add Items</h3> 
+			</div> -->
+			
+			<div id="toolbar" style="display:block; width:95%"> 
+				
+				<!-- <p style="display:inline; float:right; margin-left:2px; margin-top:0px; ">Delete</p> 	 -->
+				<img id="deleteIcon" style="height: 25px; float: right; display: inline; margin-left: 15px; margin-bottom: 3px; " src="img/iconDelete1.png" onclick=""/> 
+				
+				<!-- <p style="display:inline; float:right; margin-left:2px; margin-top:0px; margin-right: 14px; ">Edit</p> --> 	
+				<img id="editIcon" style="height: 22px;float: right;display: inline;  " src="img/iconEdit.png" onclick="editRecord()"/> 
+				<img id="cancelIcon" style="height: 25px;float: right; display:none;  " src="img/iconCancel.png" onclick="cancelEdit()"/> 
+				<img id="addImages" style="height: 25px;float: right; margin-bottom: 5px; margin-right: 20px; display:none;  " src="img/camera.png" onClick="GetPhoto()"/> 
+				<img id="AddAndDone" style="height: 25px;float: right; margin-bottom: 5px; margin-right: 20px; display:none;  " src="img/save-button.png" onClick="UpdateValue()"/> 
+				
+			</div>
+			
+			<div id="InputForm" style="width:99%; display:table; ">
+				<div class="form-group"> 
+				
+				<input class="span2" style="height: 35px;" readonly type="text" name="name" id="name" placeholder="Item's Name" >
+				<span class="label-text" id="text1">Name</span>
+				</div> 
+				<div class="form-group" >
+					<textarea  readonly placeholder="Tags"  rows="20" name="tag" id="tag" class="span2" ></textarea>
+					<span class="label-text" id="text2">tags</span>
+	<!-- 			<input style="display:table-cell; width:90%" readonly type="text" name="tag" id="tag" placeholder="Item's Name" >
+	 -->			
+			</div> 
+			</div> 
+			<!-- <div> 
+				<button id="addImages" class="ui-btn"  style="display:none; width:80%; border-radius:5px; background:#D83017;; color:white; height:30px; margin:0 auto;  " onClick="GetPhoto()" >Add Images</button>
+			</div>
+			 -->	<div style="display:block; margin:0 auto; border-collapse:separate;border-spacing:0px; "> 
+				<div id="image" style="display:none; padding:5px; overflow:hidden; margin:0 auto; border-spacing: 0px; ">
+				</div> 
+				</div> 
+				<div id="SelectedImage" style="display:none; border-radius:5px; border:solid rgba(35, 62, 10, 0.27); overflow:hidden; margin:0 auto;  ">
+				</div> 
+				<div  align="center" >
+<!-- <button style="display:none; border-radius:5px; background:#D83017;; color:white; height:30px; margin-top:15px;" id="AddAndDone" onClick="UpdateValue()">Save Item</button>
+ -->
+</div>
+		
+		
+		</div>
+		<!-- <div id="footer">
+	<div id="navbar">
+		<ul>
+			<li><a  href="index.html">Search</a></li>
+			<li><a class="active" href="add.html">Add</a></li>
+			<li><a href="c.html">Delete</a></li>
+			
+		</ul>
+	</div><!-- /navbar 
+</div><!-- /footer --> 
+
+
+</body>
+</html>
